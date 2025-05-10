@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import { Server } from 'socket.io';  // Correct import statement
 import connectDB from './ChatBackend/src/config/db.js';
 import router from "./ChatBackend/src/routes/user.routes.js";
-
+import messagerouter from "./ChatBackend/src/routes/Message.routes.js";
 
 
 // Connect to MongoDB
@@ -55,6 +55,7 @@ io.on('connection', (socket) => {
 
 
 app.use("/user",router)
+app.use("/message",messagerouter)
 
 // Start the server
 const PORT = process.env.PORT || 5000;
