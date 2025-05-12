@@ -4,7 +4,7 @@ import express from 'express';
 import http from 'http'; // Add this import statement
 import cors from 'cors';
 import cookieParser from "cookie-parser";
-import { Server } from 'socket.io';  // Correct import statement
+
 import connectDB from './ChatBackend/src/config/db.js';
 import router from "./ChatBackend/src/routes/user.routes.js";
 import messagerouter from "./ChatBackend/src/routes/Message.routes.js";
@@ -27,12 +27,7 @@ app.use(cookieParser())
 app.use(express.json());
 
 // Socket.IO setup
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-});
+
 
 // Routes
 app.get('/', (req, res) => {
@@ -40,18 +35,7 @@ app.get('/', (req, res) => {
 });
 
 // Socket.IO logic
-io.on('connection', (socket) => {
-  console.log('📡 A user connected:', socket.id);
 
-  socket.on('send-message', (data) => {
-    console.log('📨 Message received:', data);
-    io.emit('receive-message', data);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('🔌 A user disconnected:', socket.id);
-  });
-});
 
 
 app.use("/user",router)

@@ -22,9 +22,15 @@ const  receivedId = req.params.id.trim();
       message,
     });
 
-    chat.messages.push(newMessage._id);
+    // chat.messages.push(newMessage._id);
 
-    await Promise.all([chat.save(), newMessage.save()]);
+    // await Promise.all([chat.save(), newMessage.save()]);
+
+
+    await newMessage.save(); // ✅ Save message first
+chat.messages.push(newMessage._id);
+await chat.save();
+
 
     res.status(200).json({ message: "Message sent successfully", newMessage });
 
@@ -35,23 +41,29 @@ const  receivedId = req.params.id.trim();
 };
 
 
-const getmessage=async(req,res)=>{
-    try {
-        const  receivedId = req.params.id.trim();
-        const senderId = req.user._id;
-        let chat=await  Chat.findOne({
-            participants:{$all :[senderId,receivedId]}
-        }).populate("messages")
-        if(!chat){
-            
-            res.status(200).json({})
-        }
-        const message=chat.messages;
-        res.status(200).json({messages:"get all messages" ,message})
-    } catch (error) {
-        console.error("Send Message Error:", error);
-        res.status(500).json({ error: "Internal server error" });  
-    }
-}
+
+
+const getmessage = async (req, res) => {
+  try {
+    const chatUser=req.params.id.trim()
+    const senderId = req.user._id;
+ 
+    let chat = await Chat.findOne({
+      participants: { $all: [senderId, chatUser] },
+    }).populate("messages").lean();
+ if(!chat){
+  return res.status(201).json({messages:[]})
+ }
+
+
+    return res.status(200).json({ message: "Get all messages", "messages":chat.messages });
+  } catch (error) {
+    console.error("Get Message Error:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+  
 
 export { sendmessage,getmessage};
