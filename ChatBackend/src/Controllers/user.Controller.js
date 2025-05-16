@@ -22,7 +22,7 @@ import bcrypt  from "bcryptjs";
       if (newUser) {
         createTokensaveCookie(res,newUser.id)
           res.status(201).json({message:"user singnup successfully",newUser:{
-              id:newUser.id,
+              id:newUser._id,
             fullname:newUser.fullname,
             email:newUser.email
           }})
@@ -51,7 +51,7 @@ const login=async(req,res)=>{
         if(!user ||!isMatch){
             return res.status(400).json({error:"invalid email or password"})
             } 
-            createTokensaveCookie(res,user._id)
+            createTokensaveCookie(res,user.id)
          
 res.status(200).json({message:"user login successfully",user:{
     id:user._id,
@@ -101,7 +101,7 @@ const logout=async(req,res)=>{
 const allUser=async(req,res)=>{
     try {
         const loggedInuser=req.user._id
-        const filteruser = await User.find({_id:{$ne: loggedInuser},}).select(
+        const filteruser = await User.find({id:{$ne: loggedInuser},}).select(
             "-password"
         );
         res.status(200).json(filteruser)

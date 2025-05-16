@@ -12,11 +12,27 @@ const io = new Server(server, {
   },
 });
 
+export const getReciverSocketId=( receivedId)=>{
+  return users[receivedId]
+}
+const users={}
 io.on("connection", (socket) => {
   console.log("✅ User connected:", socket.id);
 
+  
+const userId=socket.handshake.query.userId
+if (userId) {
+  users[userId]=socket.id
+  console.log("✅ User connected with userId:", users);
+  
+}
+//used to send connection to user
+io.emit("getOnlineUsers",Object.keys(users))
   socket.on("disconnect", () => {
     console.log("❌ User disconnected:", socket.id);
+    //delete online user
+    delete users[userId]
+    io.emit("getOnlineUsers",Object.keys(users))
   });
 });
 

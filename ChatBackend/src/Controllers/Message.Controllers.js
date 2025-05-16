@@ -1,3 +1,4 @@
+import { getReciverSocketId } from "../../ScokietIo/server.js";
 import Chat from "../models/Chat.models.js";
 import Message from "../models/Message.models.js";
 import mongoose from "mongoose";
@@ -31,10 +32,15 @@ const sendmessage = async (req, res) => {
     });
 
     await newMessage.save();
-    chat.messages.push(newMessage._id);
+    const receivedsocketId=getReciverSocketId(receivedId)
+    if (receivedsocketId) {
+      io.to(receivedsocketId).emit('newMessage', newMessage);
+      
+    }
+    chat.messages.push(newMessage.id);
     await chat.save();
 
-    res.status(200).json({ message: "Message sent successfully", newMessage });
+    res.status(200).json({ newMessage });
 
   } catch (error) {
     console.error("Send Message Error:", error);
