@@ -86,10 +86,10 @@ console.log("receiversocketid",receiverSocketId);
 
 
 
-const senderSocketId = getReciverSocketId(senderId);
-if (senderSocketId) {
-  io.to(senderSocketId).emit("newMessage", populatedMessage);
-}
+// const senderSocketId = getReciverSocketId(senderId);
+// if (senderSocketId) {
+//   io.to(senderSocketId).emit("newMessage", populatedMessage);
+// }
 
 
 res.status(201).json(newMessage);
