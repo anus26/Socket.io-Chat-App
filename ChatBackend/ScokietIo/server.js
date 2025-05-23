@@ -12,27 +12,32 @@ const io = new Server(server, {
   },
 });
 
-export const getReciverSocketId=( receivedId)=>{
-  return users[receivedId]
-}
 const users={}
-io.on("connection", (socket) => {
-  console.log("✅ User connected:", socket.id);
-
-  
-const userId=socket.handshake.query.userId
-if (userId) {
-  users[userId]=socket.id
-  console.log("✅ User connected with userId:", users);
-  
+export const getReciverSocketId=( receivedId)=>{
+  return users[ receivedId]
 }
-//used to send connection to user
-io.emit("getOnlineUsers",Object.keys(users))
+io.on("connection", (socket) => {
+  console.log("✅ User connected:", socket.id); // ✅ correct socket id
+
+  const userId = socket.handshake.query.userId;
+  if (userId) {
+    users[userId] = socket.id; // ✅ Save correct socket.id
+    console.log("✅ Users map:", users);
+  }
+  
+  console.log("👉 socket.handshake.query.userId", socket.handshake.query.userId);
+  // Send all online users to the client
+  io.emit("getOnlineUsers", Object.keys(users));
+
   socket.on("disconnect", () => {
     console.log("❌ User disconnected:", socket.id);
-    //delete online user
-    delete users[userId]
-    io.emit("getOnlineUsers",Object.keys(users))
+
+    // Remove user from the users map
+    if (userId) {
+      delete users[userId];
+    }
+
+    io.emit("getOnlineUsers", Object.keys(users));
   });
 });
 

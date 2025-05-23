@@ -20,9 +20,9 @@ import bcrypt  from "bcryptjs";
       })
       newUser.save()
       if (newUser) {
-        createTokensaveCookie(res,newUser.id)
+        createTokensaveCookie(res,newUser._id)
           res.status(201).json({message:"user singnup successfully",newUser:{
-              id:newUser._id,
+              _id:newUser._id,
             fullname:newUser.fullname,
             email:newUser.email
           }})
@@ -54,7 +54,7 @@ const login=async(req,res)=>{
             createTokensaveCookie(res,user.id)
          
 res.status(200).json({message:"user login successfully",user:{
-    id:user._id,
+    _id:user._id,
 fullname:user.fullname,
 email:user.email
 }})
