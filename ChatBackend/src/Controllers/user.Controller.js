@@ -8,23 +8,23 @@ import bcrypt  from "bcryptjs";
         if(password!==confirmpassword){
             return res.status(400).json({error:"password not match"})
       }
-      const user= await User.findOne({email})
-      if(user){
+      const users= await User.findOne({email})
+      if(users){
           return res.status(400).json({error:"email already exist"})
         }
         const hashpassword=await bcrypt.hash(password,10)
-      const newUser=new User({
+      const user=new User({
           fullname,
           email,
           password:hashpassword,
       })
-      newUser.save()
-      if (newUser) {
-        createTokensaveCookie(res,newUser._id)
-          res.status(201).json({message:"user singnup successfully",newUser:{
-              _id:newUser._id,
-            fullname:newUser.fullname,
-            email:newUser.email
+      user.save()
+      if (user) {
+        createTokensaveCookie(res,user._id)
+          res.status(201).json({message:"user singnup successfully",user:{
+              _id:user._id,
+            fullname:user.fullname,
+            email:user.email
           }})
       }
    
@@ -100,7 +100,7 @@ const logout=async(req,res)=>{
 
 const allUser=async(req,res)=>{
     try {
-        const loggedInuser=req.user._id
+        const loggedInuser=req.user._id 
         const filteruser = await User.find({id:{$ne: loggedInuser},}).select(
             "-password"
         );
