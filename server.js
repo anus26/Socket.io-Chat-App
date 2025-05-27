@@ -25,7 +25,7 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173", // or wherever your frontend runs
+  origin: "https://sockitio-pxlfgopgb-anusrazas-projects.vercel.app", // or wherever your frontend runs
   credentials: true
  
 }));

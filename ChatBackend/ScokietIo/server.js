@@ -7,7 +7,7 @@ const server = http.createServer(app);  // ✅ only declare this once
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://sockitio-pxlfgopgb-anusrazas-projects.vercel.app",
     credentials: true,
   },
 });
