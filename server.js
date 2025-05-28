@@ -1,8 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-
-
-
 import express from "express"
 import cors from 'cors';
 import cookieParser from "cookie-parser";
@@ -25,7 +22,7 @@ connectDB();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: "https://sockitio-pxlfgopgb-anusrazas-projects.vercel.app", // or wherever your frontend runs
+  origin: "https://sockitio-app.vercel.app", // or wherever your frontend runs
   credentials: true
  
 }));
@@ -48,5 +45,5 @@ app.use("/message",messagerouter)
 // Start the server
 const PORT = process.env.PORT || 5000;
 server.PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+   console.log(`⚙️  Server is running at port : ${process.env.PORT}`);
 };

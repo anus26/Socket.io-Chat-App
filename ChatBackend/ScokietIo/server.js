@@ -7,7 +7,7 @@ const server = http.createServer(app);  // ✅ only declare this once
 
 const io = new Server(server, {
   cors: {
-    origin: "https://sockitio-pxlfgopgb-anusrazas-projects.vercel.app",
+    origin: "https://sockitio-app.vercel.app",
     credentials: true,
   },
 });
@@ -41,8 +41,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3000, () => {
-  console.log("🚀 Server running on http://localhost:3000");
+server.listen(process.env.PORT, () => {
+   console.log(`⚙️  Server is running at port : ${process.env.PORT}`);
 });
 
 export {app ,io,server}
