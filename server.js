@@ -21,11 +21,25 @@ connectDB();
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: "https://sockitio-app.vercel.app", // or wherever your frontend runs
-  credentials: true
- 
-}));
+
+// Middleware
+const allowedOrigins = [
+  "https://sockitio-app.vercel.app",
+  "https://sockitio-iq67k6kaa-anusrazas-projects.vercel.app"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
+  })
+);
 app.use(cookieParser())
 
 // Socket.IO setup

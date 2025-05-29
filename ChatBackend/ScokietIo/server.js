@@ -5,10 +5,21 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);  // ✅ only declare this once
 
+
+const allowedOrigins = [
+  "https://sockitio-app.vercel.app",
+  "https://sockitio-iq67k6kaa-anusrazas-projects.vercel.app"
+];
 const io = new Server(server, {
   cors: {
-    origin: "https://sockitio-app.vercel.app",
-    credentials: true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true
   },
 });
 
