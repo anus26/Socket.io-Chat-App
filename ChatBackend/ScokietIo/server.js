@@ -19,13 +19,13 @@ export const getReciverSocketId=( receivedId)=>{
 io.on("connection", (socket) => {
   console.log("✅ User connected:", socket.id); // ✅ correct socket id
 
-  const userId = socket.handshake.query.userId;
+  const userId = socket.handshake.auth.userId;
   if (userId) {
     users[userId] = socket.id; // ✅ Save correct socket.id
     console.log("✅ Users map:", users);
   }
   
-  console.log("👉 socket.handshake.query.userId", socket.handshake.query.userId);
+  console.log("👉 socket.handshake.query.userId", socket.handshake.auth.userId,userId);
   // Send all online users to the client
   io.emit("getOnlineUsers", Object.keys(users));
 

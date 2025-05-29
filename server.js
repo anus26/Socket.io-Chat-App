@@ -45,5 +45,5 @@ app.use("/message",messagerouter)
 // Start the server
 const PORT = process.env.PORT || 5000;
 server.PORT, () => {
-   console.log(`⚙️  Server is running at port : ${process.env.PORT}`);
+   console.log(`⚙️  Server is running at port : ${PORT}`);
 };
