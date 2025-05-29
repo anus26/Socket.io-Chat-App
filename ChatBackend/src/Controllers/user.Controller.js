@@ -101,13 +101,15 @@ const logout=async(req,res)=>{
 const allUser=async(req,res)=>{
     try {
         const loggedInuser=req.user._id 
-        const filteruser = await User.find({id:{$ne: loggedInuser},}).select(
+        const filteruser = await User.find({ _id:{$ne: loggedInuser},}).select(
             "-password"
-        );
+);
         res.status(200).json(filteruser)
     } catch (error) {
         console.log("Error ", error);
         
     }
 }
+
+//pakistan
 export {singnup,login ,logout,allUser}
