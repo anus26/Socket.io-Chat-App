@@ -12,11 +12,12 @@ const allowedOrigins = [
 ];
 const io = new Server(server, {
   cors: {
+    cors: {
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(new Error("Not allowed by CORS (Socket.IO)"));
       }
     },
     credentials: true
