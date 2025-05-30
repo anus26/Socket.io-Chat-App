@@ -6,23 +6,16 @@ const app = express();
 const server = http.createServer(app);  // ✅ only declare this once
 
 
-const allowedOrigins = [
-  "https://sockitio-app.vercel.app",
-  "https://sockitio-iq67k6kaa-anusrazas-projects.vercel.app"
-];
+
 const io = new Server(server, {
-  
-    cors: {
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS (Socket.IO)"));
-      }
-    },
-    credentials: true
-  },
+  cors: {
+    origin: "https://sockitio-app.vercel.app",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }
 });
+
 
 const users={}
 export const getReciverSocketId=( receivedId)=>{

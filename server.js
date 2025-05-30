@@ -23,24 +23,29 @@ connectDB();
 app.use(express.json());
 
 // Middleware
-const allowedOrigins = [
-  "https://sockitio-app.vercel.app",
-  "https://sockitio-iq67k6kaa-anusrazas-projects.vercel.app"
-];
+
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true
+    origin:  "https://sockitio-app.vercel.app",
+  methods: ["GET", "POST", "PUT"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+
+  credentials: true
+   
   })
 );
 app.use(cookieParser())
+
+
+
+// app.options("*", (req, res) => {
+//   res.header("Access-Control-Allow-Origin", "https://sockitio-app.vercel.app");
+//   res.header("Access-Control-Allow-Methods", "GET,POST")
+//   res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.status(200).send();
+// });
 
 // Socket.IO setup
 
