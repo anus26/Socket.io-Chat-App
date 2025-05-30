@@ -101,10 +101,10 @@ const logout=async(req,res)=>{
 const allUser=async(req,res)=>{
     try {
         const loggedInuser=req.user._id 
-        const filteruser = await User.find({ _id:{$ne: loggedInuser},}).select(
+        const users= await User.find({ _id:{$ne: loggedInuser},}).select(
             "-password"
 );
-        res.status(200).json(filteruser)
+        res.status(200).json(users)
     } catch (error) {
         console.log("Error ", error);
         
