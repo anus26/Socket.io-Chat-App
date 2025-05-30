@@ -58,6 +58,6 @@ app.use("/message",messagerouter)
 
 // Start the server
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
+server.PORT, () => {
    console.log(`⚙️  Server is running at port : ${PORT}`);
-});
+};
