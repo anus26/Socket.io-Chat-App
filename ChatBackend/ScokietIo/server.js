@@ -11,7 +11,7 @@ const allowedOrigins = [
   "https://sockitio-iq67k6kaa-anusrazas-projects.vercel.app"
 ];
 const io = new Server(server, {
-  cors: {
+  
     cors: {
     origin: function (origin, callback) {
       if (!origin || allowedOrigins.includes(origin)) {
@@ -22,7 +22,7 @@ const io = new Server(server, {
     },
     credentials: true
   },
-}});
+});
 
 const users={}
 export const getReciverSocketId=( receivedId)=>{
