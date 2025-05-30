@@ -6,12 +6,13 @@ const app = express();
 const server = http.createServer(app);  // ✅ only declare this once
 
 
+// origin:"   http://localhost:5173",
 
 const io = new Server(server, {
   cors: {
     origin: "https://sockitio-app.vercel.app",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    // methods: ["GET", "POST"],
+    // allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }
 });
