@@ -7,7 +7,7 @@ const createTokensaveCookie=(res,userId)=>{
     res.cookie("jwt",token,{
         httpOnly:true,   //xss
         secure:true,
-        sameSite:"None" , //csrf
+        sameSite:"strict" , //csrf
         maxAge: 10 * 24 * 60 * 60 * 1000  // 10 days in milliseconds
 
 
